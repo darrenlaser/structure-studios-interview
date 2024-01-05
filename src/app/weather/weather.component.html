@@ -1,0 +1,53 @@
+<div
+  class="weather-container p-4 bg-gray-800 text-white rounded-lg shadow-md mx-auto max-w-lg text-center mt-8"
+>
+  <h2 class="text-2xl font-semibold mb-4">{{ weatherModel.name }}</h2>
+
+  <div class="flex justify-center gap-6">
+    <div>
+      <div class="flex items-center">
+        <img
+          src="{{ weatherModel.icon_url }}"
+          alt="Weather Icon"
+          class="w-15 h-15 mr-4"
+        />
+        <div>
+          <p class="text-4xl font-bold">
+            {{ weatherModel.temperature }}{{ isMetric ? "°C" : "°F" }}
+          </p>
+          <p class="text-white">{{ weatherModel.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p>
+        <strong>Feels Like:</strong> {{ weatherModel.feels_like
+        }}{{ isMetric ? "°C" : "°F" }}
+      </p>
+      <p>
+        <strong>Low:</strong> {{ weatherModel.low }}{{ isMetric ? "°C" : "°F" }}
+      </p>
+      <p>
+        <strong>High:</strong> {{ weatherModel.high
+        }}{{ isMetric ? "°C" : "°F" }}
+      </p>
+    </div>
+
+    <div>
+      <p><strong>Pressure:</strong> {{ weatherModel.pressure }} hPa</p>
+      <p><strong>Humidity:</strong> {{ weatherModel.humidity }}%</p>
+      <p>
+        <strong>Wind:</strong> {{ weatherModel.wind
+        }}{{ isMetric ? " m/s" : " mph" }}
+      </p>
+    </div>
+  </div>
+
+  <button
+    class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+    (click)="toggleUnit()"
+  >
+    Toggle Units
+  </button>
+</div>
