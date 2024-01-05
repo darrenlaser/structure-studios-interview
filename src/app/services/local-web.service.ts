@@ -13,7 +13,7 @@ export class LocalWebService {
   getLocationData(latitude: number, longitude: number): Observable<any> {
     return this._httpClient
       .get<any>(
-        `http://${environment.api.host}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${environment.weatherKey}`
+        `https://${environment.api.host}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${environment.weatherKey}`
       )
       .pipe(
         catchError((err) => {
