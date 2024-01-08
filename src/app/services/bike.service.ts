@@ -5,7 +5,6 @@ import {
   Observable,
   ReplaySubject,
   map,
-  of,
   switchMap,
   take,
   tap,
@@ -30,7 +29,6 @@ export class BikeService {
           return this.filteredBikes$.pipe(take(1));
         }),
         switchMap((results) => {
-          console.log(results);
           if (results.length === 0) {
             return this._bikeWebService.loadBikes().pipe(
               tap((results) => {
