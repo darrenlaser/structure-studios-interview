@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WeatherComponent } from '../weather/weather.component';
 import { BicycleManagerRoutingModule } from './bicycle-manager-routing.module';
 import { BicycleManagerComponent } from './bicycle-manager/bicycle-manager.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,11 @@ import { BicycleManagerComponent } from './bicycle-manager/bicycle-manager.compo
     WeatherComponent,
     BicycleManagerComponent,
   ],
-  imports: [CommonModule, BicycleManagerRoutingModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    BicycleManagerRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
 })
 export class BicycleManagerModule {}
