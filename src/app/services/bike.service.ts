@@ -8,7 +8,7 @@ import { Bike } from '../models/bike.model';
 })
 export class BikeService implements OnDestroy {
   bikes: Bike[] = [];
-  filteredBikesSubject = new ReplaySubject<Bike[]>();
+  filteredBikesSubject = new ReplaySubject<Bike[]>(1);
   removeBikeSubject = new ReplaySubject<number>();
   removeAllBikesSubject = new ReplaySubject<number>();
   loadBikesSubject = new ReplaySubject<boolean>();
@@ -68,20 +68,20 @@ export class BikeService implements OnDestroy {
 
     this.removeBikeSubject
       .pipe(
-        switchMap((bikeId) =>
-          this.filteredBikes$.pipe(
+        switchMap((bikeId) => {
+          return this.filteredBikes$.pipe(
             take(1),
-            map((bikes) =>
-              bikes
+            map((bikes) => {
+              return bikes
                 .map((bike) =>
                   bike.id === bikeId
                     ? { ...bike, quantity: Math.max(0, bike.quantity - 1) }
                     : bike
                 )
-                .filter((bike) => bike.quantity > 0)
-            )
-          )
-        ),
+                .filter((bike) => bike.quantity > 0);
+            })
+          );
+        }),
         tap((results: any) => {
           this.filteredBikesSubject.next(results);
         })
