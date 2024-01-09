@@ -47,6 +47,8 @@ export class EditBicycleComponent implements OnInit {
               );
               if (foundBike) {
                 this.setForm(foundBike);
+              } else {
+                this.cancel();
               }
             })
           )
