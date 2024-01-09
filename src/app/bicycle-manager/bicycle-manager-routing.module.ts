@@ -21,7 +21,7 @@ const routes: Routes = [
         component: AddBicycleComponent,
       },
       {
-        path: 'inventory/:id',
+        path: 'inventory/details/:id',
         component: EditBicycleComponent,
       },
     ],
