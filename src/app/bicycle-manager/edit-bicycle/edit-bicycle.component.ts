@@ -42,7 +42,12 @@ export class EditBicycleComponent implements OnInit {
         switchMap((params) =>
           this._bikeService.filteredBikes$.pipe(
             tap((bikes) => {
-              this.setForm(bikes.find((x) => x.id.toString() === params['id']));
+              const foundBike = bikes.find(
+                (x) => x.id.toString() === params['id']
+              );
+              if (foundBike) {
+                this.setForm(foundBike);
+              }
             })
           )
         )
@@ -51,9 +56,6 @@ export class EditBicycleComponent implements OnInit {
   }
 
   setForm(bike: Bike) {
-    if (!bike) {
-      this._router.navigate(['/bicycles/inventory']);
-    }
     this.editBikeForm.setValue({
       id: bike.id,
       type: bike.type,
