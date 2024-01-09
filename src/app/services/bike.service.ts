@@ -8,11 +8,12 @@ import { Bike } from '../models/bike.model';
 })
 export class BikeService implements OnDestroy {
   bikes: Bike[] = [];
-  filteredBikesSubject = new ReplaySubject<Bike[]>(1);
+  filteredBikesSubject = new ReplaySubject<Bike[]>();
   removeBikeSubject = new ReplaySubject<number>();
   removeAllBikesSubject = new ReplaySubject<number>();
   loadBikesSubject = new ReplaySubject<boolean>();
   addBikesSubject = new ReplaySubject<Bike>();
+  updateBikeSubject = new ReplaySubject<Bike>();
   filterSubject = new ReplaySubject<string>();
   bikesLoadedOnStart = false;
 
@@ -38,6 +39,7 @@ export class BikeService implements OnDestroy {
                 );
               });
               this.bikes = bikes;
+              this.filterSubject.next('price');
               this.filteredBikesSubject.next(bikes);
             })
           );
@@ -119,7 +121,7 @@ export class BikeService implements OnDestroy {
                   .map((x) => x.id)
                   .reduce((acc, curr) => Math.max(acc, curr)) + 1;
               bikes.push(bike);
-              this.filterSubject.next('rating');
+              this.filterSubject.next('price');
             })
           )
         )
@@ -130,14 +132,38 @@ export class BikeService implements OnDestroy {
         },
       });
 
+    this.updateBikeSubject
+      .pipe(
+        switchMap((bike: Bike) =>
+          this.filteredBikes$.pipe(
+            take(1),
+            map((bikes) => {
+              const index = bikes.findIndex((x) => x.id === bike.id);
+              if (index !== -1) {
+                bikes[index] = bike;
+              }
+              this.filterSubject.next('price');
+            })
+          )
+        )
+      )
+      .subscribe({
+        error: (e) => {
+          console.log(`Updating item error: ${e}`);
+        },
+      });
+
     this.loadBikes();
   }
 
   ngOnDestroy(): void {
     this.loadBikesSubject.unsubscribe();
     this.filteredBikesSubject.unsubscribe();
+    this.removeAllBikesSubject.unsubscribe();
     this.removeBikeSubject.unsubscribe();
     this.addBikesSubject.unsubscribe();
+    this.updateBikeSubject.unsubscribe();
+    this.filterSubject.unsubscribe();
   }
 
   loadBikes() {

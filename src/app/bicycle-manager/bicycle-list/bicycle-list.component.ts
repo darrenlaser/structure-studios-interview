@@ -13,7 +13,7 @@ import { BikeService } from 'src/app/services/bike.service';
 export class BicycleListComponent implements OnInit {
   location$: Observable<LocationModel>;
   filterForm: FormGroup;
-  filterOptions = ['rating', 'price', 'quantity'];
+  filterOptions = ['price', 'rating', 'quantity'];
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -22,7 +22,7 @@ export class BicycleListComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) {
     this.filterForm = this._formBuilder.group({
-      filterBy: ['rating'],
+      filterBy: ['price'],
     });
   }
 
@@ -48,6 +48,10 @@ export class BicycleListComponent implements OnInit {
 
   addBikes() {
     this._router.navigate(['/bicycles/inventory/add']);
+  }
+
+  updateBike(bikeId: number) {
+    this._router.navigate([`/bicycles/inventory/details`, bikeId]);
   }
 
   applyFilter() {

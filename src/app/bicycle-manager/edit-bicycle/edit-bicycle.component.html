@@ -1,1 +1,191 @@
-<p>edit-bicycle works!</p>
+<div
+  class="bike-container p-4 bg-gray-800 text-white rounded-lg shadow-md mx-auto max-w-screen-lg text-center mt-8"
+>
+  <h2 class="text-2xl font-semibold mb-4">Update Bike Inventory Form</h2>
+  <form
+    [formGroup]="editBikeForm"
+    (ngSubmit)="onSubmit()"
+    class="max-w-lg mx-auto"
+  >
+    <div class="mb-4">
+      <label for="type" class="block text-white mb-2 font-bold">Type</label>
+      <input
+        type="text"
+        formControlName="type"
+        id="type"
+        class="form-input text-black w-60"
+      />
+      <div
+        *ngIf="
+          editBikeForm.get('type').hasError('required') &&
+          editBikeForm.get('type').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Type is required.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="description" class="block text-white mb-2 font-bold"
+        >Description</label
+      >
+      <input
+        type="text"
+        formControlName="description"
+        id="description"
+        class="form-input text-black w-60"
+      />
+      <div
+        *ngIf="
+          editBikeForm.get('description').hasError('required') &&
+          editBikeForm.get('description').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Description is required.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="rating" class="block text-white mb-2 font-bold"
+        >Rating (0-5)</label
+      >
+      <input
+        type="number"
+        min="0"
+        max="5"
+        formControlName="rating"
+        id="rating"
+        class="form-input text-black w-60"
+      />
+      <div
+        *ngIf="
+          editBikeForm.get('rating').hasError('required') &&
+          editBikeForm.get('rating').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Rating is required.
+      </div>
+      <div
+        *ngIf="
+          editBikeForm.get('rating').hasError('min') &&
+          editBikeForm.get('rating').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Rating must be at least 0.
+      </div>
+      <div
+        *ngIf="
+          editBikeForm.get('rating').hasError('max') &&
+          editBikeForm.get('rating').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Rating must be at most 5.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="price" class="block text-white mb-2 font-bold">Price</label>
+      <input
+        type="number"
+        min="0"
+        formControlName="price"
+        id="price"
+        class="form-input text-black w-60"
+      />
+      <div
+        *ngIf="
+          editBikeForm.get('price').hasError('required') &&
+          editBikeForm.get('price').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Price is required.
+      </div>
+      <div
+        *ngIf="
+          editBikeForm.get('price').hasError('min') &&
+          editBikeForm.get('price').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Price must be at least 0.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="quantity" class="block text-white mb-2 font-bold"
+        >Quantity</label
+      >
+      <input
+        type="number"
+        min="0"
+        formControlName="quantity"
+        id="quantity"
+        class="form-input text-black w-60"
+      />
+      <div
+        *ngIf="
+          editBikeForm.get('quantity').hasError('required') &&
+          editBikeForm.get('quantity').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Quantity is required.
+      </div>
+      <div
+        *ngIf="
+          editBikeForm.get('quantity').hasError('min') &&
+          editBikeForm.get('quantity').touched
+        "
+        class="text-red-500 mt-1"
+      >
+        Quantity must be at least 0.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="encoded_picture" class="block text-white mb-2 font-bold"
+        >Encoded Picture</label
+      >
+      <input
+        #fileInput
+        type="file"
+        accept=".jpg, .jpeg, .png"
+        id="encoded_picture"
+        class="form-input"
+        (change)="createImagePreview($event)"
+      />
+    </div>
+
+    <div *ngIf="displayImagePreview" class="mb-4">
+      <label class="block text-white mb-2 font-bold">Image Preview</label>
+      <img
+        [src]="editBikeForm.get('encoded_picture')?.value"
+        alt="Image Preview"
+        class="w-full h-auto rounded-md"
+      />
+    </div>
+
+    <div class="flex justify-between mt-8">
+      <button
+        type="submit"
+        class="bg-green-500 text-white px-3 py-2 rounded-md"
+      >
+        Update Bike Item Inventory
+      </button>
+
+      <button
+        type="button"
+        (click)="cancel()"
+        class="bg-blue-500 text-white px-3 py-2 rounded-md"
+      >
+        Return to Inventory
+      </button>
+    </div>
+  </form>
+</div>
